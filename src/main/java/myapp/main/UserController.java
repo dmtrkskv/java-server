@@ -7,8 +7,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class UserController {
 
-    // Пример запроса: http://localhost:8080/getUser?firstName=Megan&secondName=Fox&age=33
-
     @GetMapping("/getUser")
     public User getUserInfo(@RequestParam(value = "firstName", required = false, defaultValue = "Iri") String firstName,
             @RequestParam(value = "secondName", required = false, defaultValue = "Sergeeva") String secondName,
