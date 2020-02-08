@@ -10,7 +10,11 @@ public class UserService {
     public UserService() {
     }
 
-    public User findUser(int id) {
+    public User findById(int id) {
         return usersDao.findById(id);
+    }
+
+    public void create(User user) {
+        usersDao.create(user);
     }
 }

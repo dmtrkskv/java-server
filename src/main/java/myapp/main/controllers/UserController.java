@@ -9,10 +9,18 @@ import myapp.main.models.User;
 
 @RestController
 public class UserController {
+    private final UserService userService = new UserService();
 
     @GetMapping("/getUser")
-    public User getUserInfo(@RequestParam(value = "id", required = false, defaultValue = "1") int id) {
-        UserService userService = new UserService();
-        return userService.findUser(id);       
+    public User getUser(@RequestParam(value = "id", required = true) int id) {
+        return userService.findById(id);       
+    }
+
+    @GetMapping("/createUser")
+    public String createUser(@RequestParam(value = "name", required = true) String name) {
+        User user = new User(name);
+        userService.create(user);
+
+        return "success";     
     }
 }
