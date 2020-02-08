@@ -13,8 +13,8 @@ public class UserController {
     private final UserService userService = new UserService();
 
     @GetMapping("/getUser")
-    public User getUser(@RequestParam(value = "id", required = true) int id) {
-        return userService.findById(id);       
+    public User getUser(@RequestParam(value = "id", required = true) int id) {     
+        return userService.findById(id);
     }
 
     @GetMapping("/createUser")
@@ -22,11 +22,24 @@ public class UserController {
         User user = new User(name);
         userService.create(user);
 
-        return "success";     
+        return "user created";
     }
 
     @GetMapping("/getUsersList")
     public List<User> getUsersList() {
-        return userService.findAll();  
+        return userService.findAll();
+    }
+
+    @GetMapping("/deleteUser")
+    public String deleteUser(@RequestParam(value = "id", required = true) int id) {
+        User user = userService.findById(id);
+        
+        if (user != null) {
+            userService.delete(user);
+
+            return "user deleted";
+        } else {
+            return "denied";
+        }
     }
 }

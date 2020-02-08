@@ -21,4 +21,8 @@ public class UserService {
     public void create(User user) {
         usersDao.create(user);
     }    
+
+    public void delete(User user) {
+        usersDao.delete(user);
+    }
 }

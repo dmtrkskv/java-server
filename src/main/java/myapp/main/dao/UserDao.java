@@ -19,13 +19,21 @@ public class UserDao {
 
     public void create(User user) {
         Session session = this.openSession();
-        Transaction tx1 = session.beginTransaction();
+        Transaction transaction = session.beginTransaction();
         session.save(user);
-        tx1.commit();
+        transaction.commit();
+        session.close();
+    }
+
+    public void delete(User user) {
+        Session session = this.openSession();
+        Transaction transaction = session.beginTransaction();
+        session.delete(user);
+        transaction.commit();
         session.close();
     }
 
     private Session openSession() {
         return HibernateSessionFactoryUtil.getSessionFactory().openSession();
-    }
+    }    
 }
