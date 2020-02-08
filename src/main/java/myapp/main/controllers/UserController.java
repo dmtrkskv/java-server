@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import myapp.main.services.UserService;
 import myapp.main.models.User;
+import java.util.List;
 
 @RestController
 public class UserController {
@@ -22,5 +23,10 @@ public class UserController {
         userService.create(user);
 
         return "success";     
+    }
+
+    @GetMapping("/getUsersList")
+    public List<User> getUsersList() {
+        return userService.findAll();  
     }
 }
