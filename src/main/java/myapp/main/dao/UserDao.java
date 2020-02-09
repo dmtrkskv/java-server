@@ -8,6 +8,14 @@ import java.util.List;
 
 public class UserDao {
 
+    public void create(User user) {
+        Session session = this.openSession();
+        Transaction transaction = session.beginTransaction();
+        session.save(user);
+        transaction.commit();
+        session.close();
+    }
+
     public User findById(int id) {
         return this.openSession().get(User.class, id);
     }
@@ -17,11 +25,11 @@ public class UserDao {
         return (List<User>) this.openSession().createQuery("From User").list();
     }
 
-    public void create(User user) {
+    public void update(User user) {
         Session session = this.openSession();
-        Transaction transaction = session.beginTransaction();
-        session.save(user);
-        transaction.commit();
+        Transaction tx1 = session.beginTransaction();
+        session.update(user);
+        tx1.commit();
         session.close();
     }
 

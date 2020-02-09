@@ -11,16 +11,20 @@ public class UserService {
     public UserService() {
     }
 
+    public void create(User user) {
+        usersDao.create(user);
+    }    
+
     public User findById(int id) {
         return usersDao.findById(id);
     }
     public List<User> findAll() {
         return usersDao.findAll();
-    }
+    }   
 
-    public void create(User user) {
-        usersDao.create(user);
-    }    
+    public void update(User user) {
+        usersDao.update(user);
+    } 
 
     public void delete(User user) {
         usersDao.delete(user);

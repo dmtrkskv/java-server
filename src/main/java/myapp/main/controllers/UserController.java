@@ -10,12 +10,8 @@ import java.util.List;
 
 @RestController
 public class UserController {
-    private final UserService userService = new UserService();
-
-    @GetMapping("/getUser")
-    public User getUser(@RequestParam(value = "id", required = true) int id) {     
-        return userService.findById(id);
-    }
+    
+    private final UserService userService = new UserService();    
 
     @GetMapping("/createUser")
     public String createUser(@RequestParam(value = "name", required = true) String name) {
@@ -25,10 +21,30 @@ public class UserController {
         return "user created";
     }
 
+    @GetMapping("/getUser")
+    public User getUser(@RequestParam(value = "id", required = true) int id) {     
+        return userService.findById(id);
+    }
+
     @GetMapping("/getUsersList")
     public List<User> getUsersList() {
         return userService.findAll();
     }
+
+    @GetMapping("/updateUser")
+    public String updateUser(@RequestParam(value = "id", required = true) int id,
+    @RequestParam(value = "name", required = true) String name) {
+        User user = userService.findById(id);
+
+        if (user != null) {
+            user.setName(name);
+            userService.update(user);
+
+            return "user updated";
+        } else {
+            return "denied";
+        }
+    }   
 
     @GetMapping("/deleteUser")
     public String deleteUser(@RequestParam(value = "id", required = true) int id) {
