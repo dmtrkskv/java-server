@@ -3,13 +3,15 @@ package myapp.main.services;
 import myapp.main.dao.UserDao;
 import myapp.main.models.User;
 import java.util.List;
+import org.springframework.stereotype.Service;
 
-public class UserService {
+@Service
+public class UserService  {
 
     private UserDao usersDao = new UserDao();
 
     public UserService() {
-    }
+    }       
 
     public void create(User user) {
         usersDao.create(user);
@@ -18,6 +20,11 @@ public class UserService {
     public User findById(int id) {
         return usersDao.findById(id);
     }
+
+    public User findByUsername(String username) {
+        return usersDao.findByUsername(username);
+    }
+
     public List<User> findAll() {
         return usersDao.findAll();
     }   

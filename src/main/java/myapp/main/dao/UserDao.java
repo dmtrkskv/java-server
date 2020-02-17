@@ -4,6 +4,8 @@ import myapp.main.models.User;
 import myapp.main.utils.HibernateSessionFactoryUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
+
 import java.util.List;
 
 public class UserDao {
@@ -20,7 +22,14 @@ public class UserDao {
         return this.openSession().get(User.class, id);
     }
 
-    @SuppressWarnings("unchecked") 
+    @SuppressWarnings("unchecked")
+    public User findByUsername(String username) {
+        Query<User> query = this.openSession().createQuery("FROM User u where u.username = :username");
+        query.setParameter("username", username);
+        return query.uniqueResult();
+    }
+
+    @SuppressWarnings("unchecked")
     public List<User> findAll() {
         return (List<User>) this.openSession().createQuery("From User").list();
     }
@@ -43,5 +52,5 @@ public class UserDao {
 
     private Session openSession() {
         return HibernateSessionFactoryUtil.getSessionFactory().openSession();
-    }    
+    }
 }
