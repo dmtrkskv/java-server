@@ -1,10 +1,13 @@
 package myapp.main.dto;
 
+import myapp.main.models.Role;
+
 public class UserDto {
 
     private int id;
     private String username;
     private String password;
+    private Role role;
 
     public int getId() {
         return id;
@@ -28,5 +31,13 @@ public class UserDto {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+    public Role getRole() {
+        return role;
     }
 }

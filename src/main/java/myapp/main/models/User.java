@@ -13,11 +13,15 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "username")
+    @Column
     String username;
 
-    @Column(name = "password")
+    @Column
     String password;
+
+    @ManyToOne
+    @JoinColumn(name = "role_id")
+    private Role role;
 
     public User() {
     }
@@ -49,7 +53,15 @@ public class User {
 
     public void setPassword(String password) {
         this.password = encoder().encode(password);
-    }    
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
 
     @Bean
     public PasswordEncoder encoder() {

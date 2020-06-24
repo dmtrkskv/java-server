@@ -1,6 +1,8 @@
 package myapp.main.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -38,11 +40,13 @@ public class UserController {
         return userMapper.toDto(user);
     }
 
+    @Secured("ROLE_ADMIN")
     @GetMapping("/getUsersList")
     public List<UserDto> getUsersList() {
         return userMapper.toDto(userService.findAll());
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN') or authentication.principal.username == #userDto.getUsername()")
     @PostMapping("/updateUser")
     public String updateUser(@RequestBody UserDto userDto) {
         User user = userMapper.toModel(userDto);
