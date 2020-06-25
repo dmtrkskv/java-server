@@ -17,9 +17,7 @@ public class UserMapper {
     UserMapper() {
         modelMapper.addMappings(new PropertyMap<User, UserDto>() {
             protected void configure() {
-                // todo: обход выпиливания поля "password", выпиливать нужно,
-                // но разобраться, почему это происходит автоматически
-                map().setPassword(source.getPassword());
+                skip().setPassword(null);
             }
         });
     }
@@ -35,20 +33,20 @@ public class UserMapper {
     public List<UserDto> toDto(List<User> users) {
         List<UserDto> usersDto = new ArrayList<UserDto>(users.size());
 
-        users.forEach(user -> { 
+        users.forEach(user -> {
             UserDto userDto = new UserDto();
 
             modelMapper.map(user, userDto);
 
             usersDto.add(userDto);
-        });      
+        });
 
         return usersDto;
     }
 
     public User toModel(UserDto userDto) {
         User user = new User();
-        
+
         modelMapper.map(userDto, user);
 
         return user;
