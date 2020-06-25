@@ -36,8 +36,14 @@ public class UserDao {
 
     public void update(User user) {
         Session session = this.openSession();
+
+        User foundUser = session.get(User.class, user.getId());
         Transaction tx1 = session.beginTransaction();
-        session.update(user);
+        // Обновление части полей, чтобы не затереть роль
+        foundUser.setUsername(user.getUsername());
+        foundUser.setPassword(user.getPassword());
+
+        session.update(foundUser);
         tx1.commit();
         session.close();
     }
