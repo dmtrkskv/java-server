@@ -25,14 +25,15 @@ public class UserController {
     private UserMapper userMapper;
 
     @PostMapping("/createUser")
-    public String createUser(@RequestBody UserDto userDto) {
+    public User createUser(@RequestBody UserDto userDto) {
         User user = userMapper.toModel(userDto);
 
         userService.create(user);
 
-        return "user created";
+        return userService.findByUsername(user.getUsername());
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN') or authentication.principal.id == #id")
     @GetMapping("/getUser")
     public UserDto getUser(@RequestParam(value = "id", required = true) int id) {
         User user = userService.findById(id);
@@ -48,14 +49,15 @@ public class UserController {
 
     @PreAuthorize("hasRole('ROLE_ADMIN') or authentication.principal.username == #userDto.getUsername()")
     @PostMapping("/updateUser")
-    public String updateUser(@RequestBody UserDto userDto) {
+    public User updateUser(@RequestBody UserDto userDto) {
         User user = userMapper.toModel(userDto);
 
         userService.update(user);
 
-        return "user updated";
+        return userService.findByUsername(user.getUsername());
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN') or authentication.principal.id == #id")
     @GetMapping("/deleteUser")
     public String deleteUser(@RequestParam(value = "id", required = true) int id) {
         User user = userService.findById(id);
@@ -63,9 +65,9 @@ public class UserController {
         if (user != null) {
             userService.delete(user);
 
-            return "user deleted";
+            return "user " + user.getUsername() + " deleted";
         } else {
-            return "denied";
+            return "error";
         }
     }
 }

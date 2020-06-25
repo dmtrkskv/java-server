@@ -41,7 +41,7 @@ public class UserDao {
         Transaction tx1 = session.beginTransaction();
         // Обновление части полей, чтобы не затереть роль
         foundUser.setUsername(user.getUsername());
-        foundUser.setPassword(user.getPassword());
+        foundUser.setEncodedPassword(user.getPassword());
 
         session.update(foundUser);
         tx1.commit();

@@ -55,6 +55,10 @@ public class User {
         this.password = encoder().encode(password);
     }
 
+    public void setEncodedPassword(String password) {
+        this.password = password;
+    }
+
     public Role getRole() {
         return role;
     }
