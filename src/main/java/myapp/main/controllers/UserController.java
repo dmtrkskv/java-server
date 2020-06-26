@@ -25,12 +25,12 @@ public class UserController {
     private UserMapper userMapper;
 
     @PostMapping("/createUser")
-    public User createUser(@RequestBody UserDto userDto) {
+    public UserDto createUser(@RequestBody UserDto userDto) {
         User user = userMapper.toModel(userDto);
 
         userService.create(user);
 
-        return userService.findByUsername(user.getUsername());
+        return userMapper.toDto(userService.findByUsername(user.getUsername()));
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN') or authentication.principal.id == #id")
@@ -49,12 +49,12 @@ public class UserController {
 
     @PreAuthorize("hasRole('ROLE_ADMIN') or authentication.principal.username == #userDto.getUsername()")
     @PostMapping("/updateUser")
-    public User updateUser(@RequestBody UserDto userDto) {
+    public UserDto updateUser(@RequestBody UserDto userDto) {
         User user = userMapper.toModel(userDto);
 
         userService.update(user);
 
-        return userService.findByUsername(user.getUsername());
+        return userMapper.toDto(userService.findByUsername(user.getUsername()));
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN') or authentication.principal.id == #id")
